@@ -24,10 +24,14 @@ def start():
   data = request.get_json()
   if data["verify_token"]:
     os.environ["VERIFY_TOKEN"]=data["verify_token"]
+    print(os.environ["VERIFY_TOKEN"])
   if data["access_token"]:
     os.environ["PAGE_ACCESS_TOKEN"]=data["access_token"]
+    print(os.environ["PAGE_ACCESS_TOKEN"])
   if data["agent_token"]:
     os.environ["AGENT_TOKEN"]=data["agent_token"]
+    print(os.environ["AGENT_TOKEN"])
+
   return "ok" , 200
 
 @app.route('/', methods=['POST'])
