@@ -48,8 +48,9 @@ def webhook():
                     sender_id = messaging_event["sender"]["id"]        # the facebook ID of the person sending you the message
                     recipient_id = messaging_event["recipient"]["id"]  # the recipient's ID, which should be your page's facebook ID
                     message_text = messaging_event["message"]["text"]  # the message's text
-
-                    send_message(sender_id, "roger that!")
+                    
+                    response = reply(message_text)
+                    send_message(sender_id, response)
 
                 if messaging_event.get("delivery"):  # delivery confirmation
                     pass
@@ -77,11 +78,11 @@ def reply(message_text):
   data = json.loads(data)
   response = data["Speech"]
   
-  return "ok" , 200
+  return response
 
 def send_message(recipient_id, response):
 
-    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=message_text))
+    log("sending message to {recipient}: {text}".format(recipient=recipient_id, text=response))
 
     params = {
         "access_token": os.environ["PAGE_ACCESS_TOKEN"]
@@ -94,7 +95,7 @@ def send_message(recipient_id, response):
             "id": recipient_id
         },
         "message": {
-            "text": message_text
+            "text": response
         }
     })
     r = requests.post("https://graph.facebook.com/v2.6/me/messages", params=params, headers=headers, data=data)
