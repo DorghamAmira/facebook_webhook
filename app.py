@@ -20,7 +20,7 @@ def verify():
     return "Hello world", 200
 
 @app.route('/start', methods=['POST'])
-def webhook():
+def start():
   data = request.get_json()
   if data["verify_token"]:
     os.environ["VERIFY_TOKEN"]=data["verify_token"]
@@ -28,7 +28,7 @@ def webhook():
     os.environ["PAGE_ACCESS_TOKEN"]=data["access_token"]
   if data["agent_token"]:
     os.environ["AGENT_TOKEN"]=data["agent_token"]
-  return "ok"
+  return "ok" , 200
 
 @app.route('/', methods=['POST'])
 def webhook():
