@@ -65,7 +65,7 @@ def webhook():
 
 def reply(message_text):
   data = {
-    'query" : message_text
+    'query' : message_text
     
   }
   agent_token = os.environ["AGENT_TOKEN"]
